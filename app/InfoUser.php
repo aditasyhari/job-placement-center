@@ -18,11 +18,12 @@ class InfoUser extends Model
         'profile',
         'berat',
         'tinggi',
+        'telp',
         'desc',
         'id_user'
     ];
 
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'id');
     }
 }

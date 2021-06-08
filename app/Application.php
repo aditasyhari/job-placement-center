@@ -9,7 +9,15 @@ class Application extends Model
     //
     protected $fillable = [
         'id_job',
-        'id_user',
-        'status'
+        'id_pelamar',
+        'id_company',
+        'status',
+        'baca_perusahaan',
+        'baca_pelamar'
     ];
+
+    public function job() {
+        return $this->belongsTo('\App\Job', 'id');
+    }
+
 }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Application;
+use App\Job;
 
 class ApplicationController extends Controller
 {
@@ -86,4 +89,46 @@ class ApplicationController extends Controller
     {
         //
     }
+
+    public function pending() {
+        $apply = Application::where('id_pelamar', Auth::user()->id)->where('status', 'pending')->get();
+        $status = 'pending';
+        // dd($apply);
+        return view('user.riwayat-apply', compact(['apply', 'status']));
+    }
+
+    public function ditolak() {
+        $apply = Application::where('id_pelamar', Auth::user()->id)->where('status', 'ditolak')->get();
+        $status = 'ditolak';
+        // dd($apply);
+        return view('user.riwayat-apply', compact(['apply', 'status']));
+    }
+
+    public function diterima() {
+        $apply = Application::where('id_pelamar', Auth::user()->id)->where('status', 'diterima')->get();
+        $status = 'diterima';
+        // dd($apply);
+        return view('user.riwayat-apply', compact(['apply', 'status']));
+    }
+
+    public function notifikasi() {
+        $apps = Application::where('id_pelamar', Auth::user()->id)->whereIn('status', ['ditolak', 'diterima'])->where('baca_pelamar', false)->get();
+
+        return view('user.notifikasi', compact(['apps']));
+    }
+
+    public function detail($id) {
+        $id_app = Crypt::decryptString($id);
+        $app = Application::find($id_app);
+
+        $app->update([
+            'baca_pelamar' => true
+        ]);
+
+        $job = Job::find($app->id_job);
+
+        return view('user.detail-loker', compact(['job', 'app']));
+    }
+
+    
 }

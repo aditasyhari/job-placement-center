@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Placement Center</title>
 
+    <script src="{{ asset('assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
+
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
@@ -21,6 +23,10 @@
     <style>
         .logo img, .footer-logo img {
             max-height: 60px !important;
+        }
+
+        .cursor-link {
+            cursor: pointer;
         }
     </style>
 
@@ -53,7 +59,6 @@
     <!-- All JS Custom Plugins Link Here here -->
     <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
     <!-- Jquery, Popper, Bootstrap -->
-    <script src="{{ asset('assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <!-- Jquery Mobile Menu -->

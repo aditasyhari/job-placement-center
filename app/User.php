@@ -38,10 +38,14 @@ class User extends Authenticatable
     ];
 
     public function infoCompany() {
-        return $this->hasOne('App\InfoCompany');
+        return $this->hasOne('App\InfoCompany', 'id_user');
+    }
+
+    public function infoUser() {
+        return $this->hasOne('App\InfoUser', 'id_user');
     }
 
     public function job() {
-        return $this->hasMany('App\Job');
+        return $this->hasMany('App\Job', 'id_user');
     }
 }

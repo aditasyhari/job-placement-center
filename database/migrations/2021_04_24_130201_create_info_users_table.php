@@ -21,6 +21,7 @@ class CreateInfoUsersTable extends Migration
             $table->date('tgl_lahir')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('telp')->nullable();
             $table->string('nik')->nullable();
             $table->string('profile')->nullable();
             $table->integer('berat')->nullable();

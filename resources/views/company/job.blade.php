@@ -61,15 +61,15 @@
 
     <div class="table-responsive">
         @if(count($jobs) != 0)
-        <table class="table table-hover mg-b-0">
+        <table id="tableJob" class="table table-hover mg-b-0">
             <thead>
             <tr>
-                <th>NO</th>
+                <th>No</th>
                 <th>Nama / Posisi</th>
                 <th>Jenis</th>
                 <th>Deadline</th>
                 <th>Status</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -86,14 +86,14 @@
                             $deadline = strtotime($job->deadline);
                         ?>
 
-                        @if($today < $deadline)
-                            <div class="badge badge-success">Aktif</div>
-                        @else
+                        @if($today > $deadline)
                             <div class="badge badge-secondary">Non Aktif</div>
+                        @else
+                            <div class="badge badge-success">Aktif</div>
                         @endif
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-info" id="detailJob{{ $job->id }}" data-toggle="modal" data-target='#detail_job{{ $job->id }}' data-id="{{ $job->id }}">Detail</button>
+                        <button class="btn btn-sm btn-info" id="detailJob{{ $job->id }}" data-toggle="modal" data-target='#detail_job{{ $job->id }}' data-id="{{ $job->id }}">Edit</button>
                         <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteJob{{ $job->id }}"><i class="fas fa-trash"></i></button>
 
                         <!-- Modal Detail -->
@@ -101,13 +101,43 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="">Detail Lowongan</h5>
+                                        <h5 class="modal-title" id="">Edit Lowongan</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
+                                    <form method="POST" action="{{ route('JobUpdate', ['id' => $job->id]) }}">
+                                        @csrf
+                                        @method('put')
                                         <div class="form-group">
+                                            <label for="nama" class="col-form-label">Nama / Posisi</label>
+                                            <input type="text" name="posisi" class="form-control" id="nama" placeholder="Nama / posisi lowongan" value="{{ $job->posisi }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama" class="col-form-label">Jenis</label>
+                                            <select class="form-control" name="jenis" id="jenis" required>
+                                                <option disabled>Pilih</option>
+                                                <option value="full time" {{ ($job->jenis == 'full time') ? 'selected' : '' }}>Full Time</option>
+                                                <option value="part time" {{ ($job->jenis == 'part time') ? 'selected' : '' }}>Part Time</option>
+                                                <option value="magang" {{ ($job->jenis == 'magang') ? 'selected' : '' }}>Magang</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Deadline</label>
+                                            <input type="date" name="deadline" class="form-control" value="{{ $job->deadline }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Deskripsi</label>
+                                            <textarea class="form-control" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan">{{ $job->desc }}</textarea>
+                                        </div>
+                                        
+                                </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                                        <!-- <div class="form-group">
                                             <label for="nama" class="col-form-label text-muted">Nama / Posisi :</label>
                                             <p id="posisi">{{ $job->posisi }}</p>
                                         </div>
@@ -122,7 +152,7 @@
                                         <div class="form-group">
                                             <label for="" class="col-form-label text-muted">Deskripsi</label>
                                             <p id="desc">{{ $job->desc }}</p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="modal-footer">
                                         
@@ -160,6 +190,7 @@
                 @endforeach
             </tbody>
         </table>
+        
         @else
             <img src="{{ asset('img/kosong.png') }}" class="d-block mx-auto"
                 style="
@@ -172,6 +203,13 @@
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function() {
+        $('#tableJob').DataTable( {
+            
+        } );
+    } );
+</script>
 @if(session('status'))
     <script>
         $(function() {

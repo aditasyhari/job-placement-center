@@ -81,6 +81,10 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $job = Job::find($id);
+        $job->update($request->all());
+
+        return back()->with('status', 'Data Lowongan berhasil diperbarui !!');
     }
 
     /**

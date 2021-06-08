@@ -114,6 +114,10 @@
                         <textarea type="text" class="form-control" id="alamat" name="alamat" rows="5" placeholder="Alamat Lengkap..." required>{{ $infoUser->alamat }}</textarea>
                     </div>
                     <div class="form-group">
+                        <label for="telp">Nomor HP (Whatsapp)</label>
+                        <input type="text" class="form-control" id="telp" name="telp" value="{{ $infoUser->telp }}" placeholder="nomor yang dapat dihubungi" required>
+                    </div>
+                    <div class="form-group">
                         <div class="row row-sm">
                             <div class="col-md-6">
                                 <div class="input-group">

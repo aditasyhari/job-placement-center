@@ -31,7 +31,6 @@
 
     
     <script src="{{ asset('azia/lib/jquery/jquery.min.js') }}"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  -->
     <script src="{{ asset('azia/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
@@ -42,11 +41,10 @@
     <link href="{{ asset('azia/lib/typicons.font/typicons.css') }}" rel="stylesheet">
     <link href="{{ asset('azia/lib/flag-icon-css/css/flag-icon.min.css') }}" rel="stylesheet">
     <link href="{{ asset('azia/lib/select2/css/select2.min.css') }}" rel="stylesheet">
-    <!-- <link href="{{ asset('azia/lib/amazeui-datetimepicker/css/amazeui.datetimepicker.css') }}" rel="stylesheet"> -->
-    
-    <!-- Datepicker -->
-    <!-- <link href="{{ asset('assets/datepicker/css/bootstrap-datepicker.min.css') }}" rel='stylesheet' type='text/css'>
-    <script src="{{ asset('assets/datepicker/js/bootstrap-datepicker.min.js') }}" type='text/javascript'></script> -->
+
+    <!-- Datatables -->
+    <link href="{{ asset('assets/DataTables/datatables.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
 
     <!-- azia CSS -->
     <link rel="stylesheet" href="{{ asset('azia/css/azia.css') }}">

@@ -33,23 +33,33 @@
                 </li>
                 @break
             @case(2)
-                <li class="nav-item active">
+                <li class="nav-item {{ request()->routeIs('user') ? 'active' : '' }}">
                     <a href="{{ route('user') }}" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Riwayat Apply</a>
+                <li class="nav-item {{ request()->routeIs('loker') ? 'active' : '' }}">
+                    <a href="{{ route('loker') }}" class="nav-link"><i class="typcn typcn-briefcase"></i> Cari Loker</a>
                 </li>
+                <li class="nav-item {{ request()->routeIs(['U-pending', 'U-ditolak', 'U-diterima']) ? 'active' : '' }}">
+                    <a href="" class="nav-link with-sub"><i class="typcn typcn-document"></i> Riwayat Apply</a>
+                    <nav class="az-menu-sub">
+                        <a href="{{ route('U-pending') }}" class="nav-link">Pending</a>
+                        <a href="{{ route('U-ditolak') }}" class="nav-link">Ditolak</a>
+                        <a href="{{ route('U-diterima') }}" class="nav-link">Diterima</a>
+                    </nav>
+                </li>
+                
                 @break
             @case(3)
-                <li class="nav-item active">
-                    <a href="{{ route('company') }}" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
+                <li class="nav-item {{ request()->routeIs('company') ? 'active' : '' }}">
+                    <a href="{{ route('company') }}" class="nav-link "><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('C-jobs') ? 'active' : '' }}">
                     <a href="{{ route('C-jobs') }}" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> Post Jobs</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('company/pelamar*') ? 'active' : '' }}">
                     <a href="{{ route('C-pelamar') }}" class="nav-link"><i class="typcn typcn-user-outline"></i> Pelamar</a>
                 </li>
+                
                 @break
             @default
         @endswitch
@@ -57,45 +67,111 @@
     </div><!-- az-header-menu -->
     <div class="az-header-right">
         <div class="dropdown az-header-notification">
-            <a href="" class="new"><i class="typcn typcn-bell"></i></a>
-        <div class="dropdown-menu">
-            <div class="az-dropdown-header mg-b-20 d-sm-none">
-            <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
-            </div>
-            <h6 class="az-notification-title">Notifications</h6>
-            <p class="az-notification-text">You have 2 unread notification</p>
-            <div class="az-notification-list">
-            <div class="media new">
-                <div class="az-img-user"><img src="../img/faces/face2.jpg" alt=""></div>
-                <div class="media-body">
-                <p>Congratulate <strong>Socrates Itumay</strong> for work anniversaries</p>
-                <span>Mar 15 12:32pm</span>
-                </div><!-- media-body -->
-            </div><!-- media -->
-            <div class="media new">
-                <div class="az-img-user online"><img src="../img/faces/face3.jpg" alt=""></div>
-                <div class="media-body">
-                <p><strong>Joyce Chua</strong> just created a new blog post</p>
-                <span>Mar 13 04:16am</span>
-                </div><!-- media-body -->
-            </div><!-- media -->
-            <div class="media">
-                <div class="az-img-user"><img src="../img/faces/face4.jpg" alt=""></div> 
-                <div class="media-body">
-                <p><strong>Althea Cabardo</strong> just created a new blog post</p>
-                <span>Mar 13 02:56am</span>
-                </div><!-- media-body -->
-            </div><!-- media -->
-            <div class="media">
-                <div class="az-img-user"><img src="../img/faces/face5.jpg" alt=""></div>
-                <div class="media-body">
-                <p><strong>Adrian Monino</strong> added new comment on your photo</p>
-                <span>Mar 12 10:40pm</span>
-                </div><!-- media-body -->
-            </div><!-- media -->
-            </div><!-- az-notification-list -->
-            <div class="dropdown-footer"><a href="">View All Notifications</a></div>
-        </div><!-- dropdown-menu -->
+            @switch(Auth()->user()->role)
+                @case(2)
+                    <?php 
+                        $notif = \App\Application::where('id_pelamar', Auth()->user()->role)
+                                        ->whereIn('status', ['ditolak', 'diterima'])
+                                        ->where('baca_pelamar', false)
+                                        ->orderBy('id', 'desc')
+                                        ->skip(0)
+                                        ->take(5)
+                                        ->get();
+
+                        $jml_notif = \App\Application::where('id_pelamar', Auth()->user()->role)
+                                        ->whereIn('status', ['ditolak', 'diterima'])
+                                        ->where('baca_pelamar', false)
+                                        ->count();
+                    ?>
+                    @break
+                @case(3)
+                    <?php 
+                        $notif = \App\Application::where('id_company', Auth()->user()->role)
+                                        ->where('baca_perusahaan', false)
+                                        ->orderBy('id', 'desc')
+                                        ->skip(0)
+                                        ->take(5)
+                                        ->get();
+                        
+                        $jml_notif = \App\Application::where('id_company', Auth()->user()->role)
+                                        ->where('baca_perusahaan', false)
+                                        ->count();
+                    ?>
+                    @break
+                @default
+                    @break
+            @endswitch
+            @if($jml_notif != 0)
+                <a href="" class="new"><i class="typcn typcn-bell"></i></a>
+            @else
+                <a href="" class=""><i class="typcn typcn-bell"></i></a>
+            @endif
+            <div class="dropdown-menu">
+                <div class="az-dropdown-header mg-b-20 d-sm-none">
+                    <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                </div>
+                <h6 class="az-notification-title">Notifikasi</h6>
+                @if($jml_notif != 0)
+                    <p class="az-notification-text">Anda memiliki {{ $jml_notif }} notifikasi belum dibaca.</p>
+                    <div class="az-notification-list">
+                        @switch(Auth()->user()->role)
+                            @case(2)
+                                @foreach($notif as $n)
+                                    <?php
+                                        $user = \App\InfoCompany::firstWhere('id_user', $n->id_company);
+                                        $loker = \App\Job::find($n->id_job);
+                                    ?>
+                                    <div class="media new">
+                                        <div class="az-img-user"><img src="{{ asset('img/profile/'.$user->profile) }}" alt=""></div>
+                                        <div class="media-body">
+                                            <?php
+                                                $id_app = Illuminate\Support\Facades\Crypt::encryptString($n->id);
+                                            ?>
+                                            <a href="{{ route('U-DetailLoker', ['id' => $id_app]) }}" class="text-dark">
+                                                <p>Perusahaan <strong>{{ $user->nama }}</strong> memberikan tanggapan untuk loker <strong>{{ $loker->posisi }}</strong></p>
+                                                <?php
+                                                    $time = date('l, d F Y', strtotime( $n->created_at));
+                                                ?>
+                                                <span>{{ $time }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="dropdown-footer"><a href="{{ route('U-notifikasi') }}">View All Notifications</a></div>
+                                @break
+                            @case(3)
+                                @foreach($notif as $n)
+                                    <?php
+                                        $user = \App\InfoUser::firstWhere('id_user', $n->id_pelamar);
+                                        $loker = \App\Job::find($n->id_job);
+                                    ?>
+                                    <div class="media new">
+                                        <div class="az-img-user"><img src="{{ asset('img/profile/'.$user->profile) }}" alt=""></div>
+                                        <div class="media-body">
+                                            <?php
+                                                $id_app = Illuminate\Support\Facades\Crypt::encryptString($n->id);
+                                            ?>
+                                            <a href="{{ route('C-DetailPelamar', ['id' => $id_app]) }}" class="text-dark">
+                                                <p>Pelamar baru <strong>{{ $user->nama }}</strong> untuk {{ $loker->posisi }}</p>
+                                                <?php
+                                                    $time = date('l, d F Y', strtotime( $n->created_at));
+                                                ?>
+                                                <span>{{ $time }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="dropdown-footer"><a href="{{ route('C-notifikasi') }}">View All Notifications</a></div>
+                                @break
+                            @default
+                                @break
+                        @endswitch
+                    </div>
+                @else
+                    <p class="az-notification-text">Tidak ada notifikasi.</p>
+                @endif
+
+            </div><!-- dropdown-menu -->
         </div><!-- az-header-notification -->
         <div class="dropdown az-profile-menu">
             <?php

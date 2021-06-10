@@ -79,6 +79,28 @@
     <script src="{{ asset('azia/js/chart.flot.sampledata.js') }}"></script>
     <script src="{{ asset('azia/js/dashboard.sampledata.js') }}"></script>
     <!-- <script src="{{ asset('azia/js/jquery.cookie.js') }}"></script> -->
+
+    <script src="{{ asset('assets/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+
+    <script>
+      tinymce.init({
+        selector: 'textarea.descJob',
+        height: 400,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount',
+          'fullscreen'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+          'bold italic backcolor | alignleft aligncenter ' +
+          'alignright alignjustify | bullist numlist outdent indent | ' +
+          'removeformat | help fullscreen',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+      });
+
+    </script>
     
     @yield('js')
 

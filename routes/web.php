@@ -32,6 +32,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'name' => 'admin', '
     Route::get('/','AdminController@index')->name('admin');
     Route::get('/profile','ProfileController@index')->name('A-profile');
     Route::resource('test', 'TestController');
+    Route::resource('jobs', 'JobController');
+    Route::resource('users', 'UserController');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'user', 'name' => 'user', 'namespace' => 'User'], function () {

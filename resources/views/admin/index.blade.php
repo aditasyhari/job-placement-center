@@ -15,9 +15,7 @@
                     @endif
                         Welcome Mr. {{Auth()->user()->name}}
                     {{ __('You are The Admin!') }} <br>
-                    {{-- <a href="{{url()->to('admin/test')}}" method="get"> <button class="btn btn-primary">View Details</button></a> --}}
-                    <a href="{{route('A-details')}}"> <button class="btn btn-primary">View Details</button></a>
-                    {{-- <a href="{{url()->to('admin/get-details')}}" method="get"> <button class="btn btn-primary">View Details</button></a> --}}
+                    
                 </div>
             </div>
         </div>

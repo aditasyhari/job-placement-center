@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Application;
 use App\Job;
+use App\Pendidikan;
+use App\InfoUser;
 
 class ApplicationController extends Controller
 {
@@ -40,9 +42,19 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         //
-        Application::create($request->all());
+        $user = InfoUser::firstWhere('id_user', $request->id_pelamar);
+        $pendidikan = Pendidikan::where('id_user', $request->id_pelamar)->count();
 
-        return back()->with('status', 'Apply Lowongan berhasil, status PENDING. Tunggu informasi selanjutnya.');
+        if($user->nim != null || $user->nama != null) {
+            if($pendidikan > 0) {
+                Application::create($request->all());
+                return back()->with('status', 'BERHASIL !! Apply lowongan status PENDING. Silhkan tunggu info selanjutnya dari pihak perusahaan.');
+            } else {
+                return back()->with('status', 'GAGAL !! Silahkan lengkapi terlebih dahulu RIWAYAT PENDIDIKAN anda.');
+            }
+        }
+
+        return back()->with('status', 'GAGAL !! Silahkan lengkapi terlebih dahulu PROFILE anda.');
     }
 
     /**

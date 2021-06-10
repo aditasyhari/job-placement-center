@@ -95,7 +95,6 @@ class RegisterController extends Controller
             InfoUser::create([
                 'id_user' => $user->id,
                 'profile' => 'default.jpg',
-                'gender' => 'L',
             ]);
         }else {
             InfoCompany::create([

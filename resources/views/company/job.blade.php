@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Deskripsi</label>
-                            <textarea class="form-control" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan"></textarea>
+                            <textarea class="form-control descJob" name="desc" id="descJob" cols="30" rows="10" placeholder="deskripsi tentang lowongan"></textarea>
                         </div>
                         
                 </div>
@@ -129,7 +129,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Deskripsi</label>
-                                            <textarea class="form-control" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan">{{ $job->desc }}</textarea>
+                                            <textarea class="form-control descJob" name="desc" id="descJob" cols="30" rows="10" placeholder="deskripsi tentang lowongan">{{ $job->desc }}</textarea>
                                         </div>
                                         
                                 </div>
@@ -175,7 +175,8 @@
                                         <form method="POST" action="{{ route('JobDestroy', ['id' => $job->id]) }}">
                                             @csrf
                                             @method('delete')
-                                            Yakin hapus lowongan {{ $job->posisi }} ?
+                                            <p>Yakin hapus lowongan <strong>{{ $job->posisi }}</strong> ?</p>
+                                            <span class="mt-3 bg-warning p-1">Semua pelamar pada lowongan ini akan ikut terhapus.</span>
                                     </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-danger">Hapus</button>

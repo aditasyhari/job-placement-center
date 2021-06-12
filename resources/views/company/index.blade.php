@@ -54,6 +54,7 @@
           </div> -->
           <hr>
 
+          @if($all > 0)
           <div class="row row-sm mg-b-20">
 
             <div class="col-lg-4 mg-t-20 mg-lg-t-0">
@@ -137,6 +138,14 @@
 
 
           </div><!-- row -->
+
+          @else
+            <img src="{{ asset('img/kosong.png') }}" class="d-block mx-auto"
+                style="
+                    max-width: 50%;
+                "
+            >
+          @endif
         </div><!-- az-content-body -->
       </div>
     </div><!-- az-content -->

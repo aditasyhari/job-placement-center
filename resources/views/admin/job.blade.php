@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Deskripsi</label>
-                            <textarea class="form-control" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan"></textarea>
+                            <textarea class="form-control descJob" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan"></textarea>
                         </div>
                         
                 </div>
@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Deskripsi</label>
-                                            <textarea class="form-control" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan">{{ $job->desc }}</textarea>
+                                            <textarea class="form-control descJob" name="desc" id="desc" cols="30" rows="10" placeholder="deskripsi tentang lowongan">{{ $job->desc }}</textarea>
                                         </div>
                                         
                                 </div>

@@ -11,4 +11,9 @@ class Skill extends Model
         'nama',
         'id_user',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\User', 'id');
+    }
+    
 }

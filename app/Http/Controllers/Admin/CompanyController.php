@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 
-class UserController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::where('role', 2)->orderBy('id', 'desc')->get();
-        return view('admin.user', compact(['users']));
+        $companies = User::where('role', 3)->orderBy('id', 'desc')->get();
+        return view('admin.company', compact(['companies']));
     }
 
     /**
@@ -50,9 +50,9 @@ class UserController extends Controller
     public function show($id)
     {
         //
-        $u = User::findOrFail($id);
+        $c = User::findOrFail($id);
 
-        return view('admin.detail-user', compact(['u']));
+        return view('admin.detail-company', compact(['c']));
     }
 
     /**

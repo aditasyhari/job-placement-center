@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'name' => 'admin', '
     Route::resource('test', 'TestController');
     Route::resource('jobs', 'JobController');
     Route::resource('users', 'UserController');
+    Route::resource('companies', 'CompanyController');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'user', 'name' => 'user', 'namespace' => 'User'], function () {

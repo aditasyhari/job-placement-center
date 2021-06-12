@@ -16,4 +16,9 @@ class Licensi extends Model
         'file',
         'id_user',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\User', 'id');
+    }
+    
 }

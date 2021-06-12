@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title')Users | JPC @endsection
+@section('title')Perusahaan | JPC @endsection
 
 @section('css')
 @endsection
 
 @section('content')
-<div class="az-content-label mg-b-5">List User</div>
-    <p class="mg-b-20">daftar semua user yang mendaftar di aplikasi JPC.</p>
+<div class="az-content-label mg-b-5">List Perusahaan</div>
+    <p class="mg-b-20">daftar semua perusahaan yang mendaftar di aplikasi JPC.</p>
     <!-- <button type="button" class="btn btn-sm btn-primary mb-4" data-toggle="modal" data-target="#addJobs"><i class="fas fa-plus"></i></button> -->
     
     <div class="table-responsive">
-        @if(count($users) != 0)
+        @if(count($companies) != 0)
         <table id="tableUser" class="table table-hover mg-b-0">
             <thead>
             <tr>
@@ -20,59 +20,51 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Profile</th>
-                <th>Pendidikan</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
                 @include('tanggal_indo')
-                @foreach($users as $user)
+                @foreach($companies as $company)
                 <?php
 
                 ?>
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <th>
-                        <img src="{{ asset('img/profile/'.$user->infoUser->profile) }}" alt=""
+                        <img src="{{ asset('img/profile/'.$company->infoCompany->profile) }}" alt=""
                             style="max-width: 50px;"
                         >
                     </th>
-                    <th>{{ $user->name }}</th>
-                    <td>{{ $user->email }}</td>
+                    <th>{{ $company->name }}</th>
+                    <td>{{ $company->email }}</td>
                     <td>
-                        @if($user->infoUser->nim == null || $user->infoUser->nik == null)
+                        @if($company->infoCompany->npwp == null || $company->infoCompany->nama == null)
                             <span class="badge badge-warning">Belum Lengkap</span>
                         @else
                             <span class="badge badge-success">Lengkap</span>
                         @endif
                     </td>
                     <td>
-                        @if($user->pendidikan->count() > 0)
-                            <span class="badge badge-success">Sudah Diisi</span>
-                        @else
-                            <span class="badge badge-warning">Belum Diisi</span>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('users.show', ['user' => $user->id]) }}" class="btn btn-info">Detail</a>
-                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteUser{{ $user->id }}"><i class="fas fa-trash"></i></button>
+                        <a href="{{ route('companies.show', ['company' => $company->id]) }}" class="btn btn-info">Detail</a>
+                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteUser{{ $company->id }}"><i class="fas fa-trash"></i></button>
 
                         <!-- Modal Delete -->
-                        <div class="modal fade" id="deleteUser{{ $user->id }}" tabindex="-1" aria-labelledby="deleteUser{{ $user->id }}Label" aria-hidden="true">
+                        <div class="modal fade" id="deleteUser{{ $company->id }}" tabindex="-1" aria-labelledby="deleteUser{{ $company->id }}Label" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteUser{{ $user->id }}Label">Hapus User ?</h5>
+                                        <h5 class="modal-title" id="deleteUser{{ $company->id }}Label">Hapus User ?</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="{{ route('users.destroy', ['user' => $user->id]) }}">
+                                        <form method="POST" action="{{ route('companies.destroy', ['company' => $company->id]) }}">
                                             @csrf
                                             @method('delete')
-                                            <p>Yakin hapus user <strong>{{ $user->name }} - {{ $user->email }}</strong> ?</p>
-                                            <span class="mt-3 bg-warning p-1">Semua yang berelasi dengan user ini akan ikut terhapus.</span>
+                                            <p>Yakin hapus perusahaan <strong>{{ $company->infoCompany->nama }} ({{ $company->name }}) - {{ $company->email }}</strong> ?</p>
+                                            <span class="mt-3 bg-warning p-1">Semua yang berelasi dengan perusahaan ini akan ikut terhapus.</span>
                                     </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-danger">Hapus</button>

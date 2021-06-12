@@ -52,4 +52,13 @@ class User extends Authenticatable
     public function pendidikan() {
         return $this->hasMany('App\Pendidikan', 'id_user');
     }
+
+    public function skill() {
+        return $this->hasMany('App\Skill', 'id_user');
+    }
+
+    public function licensi() {
+        return $this->hasMany('App\Licensi', 'id_user');
+    }
+
 }

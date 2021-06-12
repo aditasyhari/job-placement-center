@@ -12,17 +12,17 @@
         <ul class="nav">
         @switch(Auth()->user()->role)
             @case(1)
-                <li class="nav-item active show">
+                <li class="nav-item {{ request()->routeIs('admin') ? 'active' : '' }}">
                     <a href="{{ route('admin') }}" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('jobs.index') ? 'active' : '' }}">
                     <a href="{{ route('jobs.index') }}" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> Lowongan</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs(['users.index', 'users.show']) ? 'active' : '' }}">
                     <a href="{{ route('users.index') }}" class="nav-link"><i class="typcn typcn-user-outline"></i> User</a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link"><i class="typcn typcn-th-large-outline"></i> Perusahaan</a>
+                <li class="nav-item {{ request()->routeIs(['companies.index', 'companies.show']) ? 'active' : '' }}">
+                    <a href="{{ route('companies.index') }}" class="nav-link"><i class="typcn typcn-th-large-outline"></i> Perusahaan</a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link with-sub"><i class="typcn typcn-cog-outline"></i> Settings</a>

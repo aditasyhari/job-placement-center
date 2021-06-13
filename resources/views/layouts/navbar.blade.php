@@ -24,6 +24,9 @@
                 <li class="nav-item {{ request()->routeIs(['companies.index', 'companies.show']) ? 'active' : '' }}">
                     <a href="{{ route('companies.index') }}" class="nav-link"><i class="typcn typcn-th-large-outline"></i> Perusahaan</a>
                 </li>
+                <li class="nav-item {{ request()->routeIs(['applications.index', 'companies.show']) ? 'active' : '' }}">
+                    <a href="{{ route('applications.index') }}" class="nav-link"><i class="typcn typcn-document"></i> Apply</a>
+                </li>
                 <li class="nav-item">
                     <a href="" class="nav-link with-sub"><i class="typcn typcn-cog-outline"></i> Settings</a>
                     <nav class="az-menu-sub">

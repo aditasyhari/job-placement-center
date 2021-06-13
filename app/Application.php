@@ -17,7 +17,7 @@ class Application extends Model
     ];
 
     public function job() {
-        return $this->belongsTo('\App\Job', 'id');
+        return $this->belongsTo('App\Job', 'id');
     }
 
 }

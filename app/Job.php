@@ -20,7 +20,7 @@ class Job extends Model
     }
 
     public function apply() {
-        return $this->hasMany('\App\Application', 'id_job');
+        return $this->hasMany('App\Application', 'id_job');
     }
 
 }

@@ -27,12 +27,8 @@
                 <li class="nav-item {{ request()->routeIs(['applications.index', 'companies.show']) ? 'active' : '' }}">
                     <a href="{{ route('applications.index') }}" class="nav-link"><i class="typcn typcn-document"></i> Apply</a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link with-sub"><i class="typcn typcn-cog-outline"></i> Settings</a>
-                    <nav class="az-menu-sub">
-                        <a href="" class="nav-link">Notifikasi</a>
-                        <a href="" class="nav-link">Admin</a>
-                    </nav>
+                <li class="nav-item {{ request()->routeIs('notifications.index') ? 'active' : '' }}">
+                    <a href="{{ route('notifications.index') }}" class="nav-link"><i class="typcn typcn-bell"></i> Notifikasi</a>
                 </li>
                 @break
             @case(2)
@@ -73,7 +69,7 @@
             @switch(Auth()->user()->role)
                 @case(2)
                     <?php 
-                        $notif = \App\Application::where('id_pelamar', Auth()->user()->role)
+                        $notif = \App\Application::where('id_pelamar', Auth()->user()->id)
                                         ->whereIn('status', ['ditolak', 'diterima'])
                                         ->where('baca_pelamar', false)
                                         ->orderBy('id', 'desc')
@@ -81,7 +77,7 @@
                                         ->take(5)
                                         ->get();
 
-                        $jml_notif = \App\Application::where('id_pelamar', Auth()->user()->role)
+                        $jml_notif = \App\Application::where('id_pelamar', Auth()->user()->id)
                                         ->whereIn('status', ['ditolak', 'diterima'])
                                         ->where('baca_pelamar', false)
                                         ->count();
@@ -89,14 +85,14 @@
                     @break
                 @case(3)
                     <?php 
-                        $notif = \App\Application::where('id_company', Auth()->user()->role)
+                        $notif = \App\Application::where('id_company', Auth()->user()->id)
                                         ->where('baca_perusahaan', false)
                                         ->orderBy('id', 'desc')
                                         ->skip(0)
                                         ->take(5)
                                         ->get();
                         
-                        $jml_notif = \App\Application::where('id_company', Auth()->user()->role)
+                        $jml_notif = \App\Application::where('id_company', Auth()->user()->id)
                                         ->where('baca_perusahaan', false)
                                         ->count();
                     ?>
@@ -220,7 +216,7 @@
                     </span>
                 </div><!-- az-header-profile -->
 
-                <a href="" class="dropdown-item"><i class="typcn typcn-key"></i> Change Password</a>
+                <a href="{{ route('change') }}" class="dropdown-item"><i class="typcn typcn-key"></i> Change Password</a>
                 @switch(Auth()->user()->role)
                     @case(1)
                         @break

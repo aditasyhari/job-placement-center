@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Placement Center</title>
 
+    <link rel="shortcut icon" type="image/jpg" href="{{ asset('assets/img/logo/logo2.png') }}"/>
+
+
     <script src="{{ asset('assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">

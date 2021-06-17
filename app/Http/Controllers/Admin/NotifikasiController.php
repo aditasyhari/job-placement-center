@@ -4,9 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifikasi;
 
-class TestController extends Controller
+class NotifikasiController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,10 @@ class TestController extends Controller
      */
     public function index()
     {
-        return view('admin.view');
+        //
+        $notif = Notifikasi::findOrFail(1);
+
+        return view('admin.notifikasi', compact(['notif']));
     }
 
     /**
@@ -35,7 +48,7 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**
@@ -69,8 +82,10 @@ class TestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
-        dd($id.' => '.$request->all());
+        //
+        Notifikasi::find($id)->update($request->all());
+
+        return back()->with('status', 'Data berhasil diperbarui!!');
     }
 
     /**

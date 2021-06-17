@@ -19,6 +19,8 @@
     <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
     <meta name="author" content="BootstrapDash">
 
+    <link rel="shortcut icon" type="image/jpg" href="{{ asset('assets/img/logo/logo2.png') }}"/>
+
     <title>@yield('title')</title>
 
     <!-- vendor css -->

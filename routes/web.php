@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KirimEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/home', function () {
+    return redirect()->route('home');
+});
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/loker', 'HomeController@loker')->name('loker');
 Route::get('/loker/filter', 'HomeController@filter')->name('filter');
@@ -28,6 +29,13 @@ Route::get('/perusahaan', 'HomeController@company')->name('perusahaan');
 
 Auth::routes();
 
+Auth::routes(['verify' => true]);
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('change-password', 'ChangePasswordController@index')->name('change');
+    Route::post('change-password', 'ChangePasswordController@store')->name('change.password');
+});
+
 Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'name' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/','AdminController@index')->name('admin');
     Route::get('/profile','ProfileController@index')->name('A-profile');
@@ -36,6 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'name' => 'admin', '
     Route::resource('users', 'UserController');
     Route::resource('companies', 'CompanyController');
     Route::resource('applications', 'ApplyController');
+    Route::resource('notifications', 'NotifikasiController');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'user', 'name' => 'user', 'namespace' => 'User'], function () {

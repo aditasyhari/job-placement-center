@@ -9,6 +9,16 @@ use App\Application;
 
 class UserController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
+
     public function index()
     {
         $all = Application::where('id_pelamar', Auth::user()->id)->count();

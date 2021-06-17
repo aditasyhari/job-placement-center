@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 use App\Application;
 use App\Job;
 use App\User;
@@ -13,9 +15,19 @@ use App\InfoUser;
 use App\Skill;
 use App\Pendidikan;
 use App\Licensi;
+use App\Notifikasi;
 
 class PelamarController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -101,8 +113,26 @@ class PelamarController extends Controller
     {
         //
         $app = Application::find($id);
+        $u = User::find($app->id_pelamar);
+        $pesan = Notifikasi::find(1);
 
         $app->update($request->all());
+
+        $email = $u->email;
+        if($request->status == 'diterima') {
+            $data = [
+                'title' => 'Lamaran Diterima!',
+                'url' => 'http://127.0.0.1:8000/login',
+                'pesan' => $pesan->pesan_diterima,
+            ];
+        } elseif($request->status == 'ditolak') {
+            $data = [
+                'title' => 'Lamaran Ditolak!',
+                'url' => 'http://127.0.0.1:8000/login',
+                'pesan' => $pesan->pesan_ditolak,
+            ];
+        }
+        Mail::to($email)->send(new SendMail($data));
 
         return back()->with('status', 'Status pelamar berhasil diperbarui !!');
     }

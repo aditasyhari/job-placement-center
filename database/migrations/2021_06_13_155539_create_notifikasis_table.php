@@ -15,6 +15,11 @@ class CreateNotifikasisTable extends Migration
     {
         Schema::create('notifikasis', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->string('password');
+            $table->text('pesan_apply');
+            $table->text('pesan_diterima');
+            $table->text('pesan_ditolak');
             $table->timestamps();
         });
     }

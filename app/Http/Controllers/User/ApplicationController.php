@@ -6,13 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
+use App\User;
 use App\Application;
 use App\Job;
 use App\Pendidikan;
 use App\InfoUser;
+use App\Notifikasi;
 
 class ApplicationController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,10 +57,21 @@ class ApplicationController extends Controller
         //
         $user = InfoUser::firstWhere('id_user', $request->id_pelamar);
         $pendidikan = Pendidikan::where('id_user', $request->id_pelamar)->count();
+        $pesan = Notifikasi::find(1);
 
         if($user->nim != null || $user->nama != null) {
             if($pendidikan > 0) {
-                Application::create($request->all());
+                $app = Application::create($request->all());
+                $c = User::find($request->id_company);
+
+                $email = $c->email;
+                $data = [
+                    'title' => 'Pelamar Baru!',
+                    'url' => 'http://127.0.0.1:8000/login',
+                    'pesan' => $pesan->pesan_apply,
+                ];
+                Mail::to($email)->send(new SendMail($data));
+
                 return back()->with('status', 'BERHASIL !! Apply lowongan status PENDING. Silhkan tunggu info selanjutnya dari pihak perusahaan.');
             } else {
                 return back()->with('status', 'GAGAL !! Silahkan lengkapi terlebih dahulu RIWAYAT PENDIDIKAN anda.');

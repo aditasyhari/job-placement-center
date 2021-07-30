@@ -255,6 +255,7 @@
                                                         <a href="{{ route('lokerDetail', ['id' => $id]) }}" class="cursor-link"><h4>{{ $j->posisi }}</h4></a>
                                                         <ul>
                                                             <li>{{ $p->nama }}</li>
+                                                            <br>
                                                             <li><i class="fas fa-calendar"></i>Deadline: {{ tanggal_indonesia($j->deadline) }}</li>
                                                             <li class="text-capitalize">{{ $j->jenis }}</li>
                                                         </ul>

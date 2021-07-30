@@ -80,7 +80,7 @@
                                 <div class="small-section-tittle">
                                     <h4>Deskripsi Pekerjaan</h4>
                                 </div>
-                                <div>{{ $job->desc }}</div>
+                                <div>{!! $job->desc !!}</div>
                             </div>
                            
                         </div>

@@ -64,8 +64,11 @@
                         <input type="text" class="form-control" id="nama" name="nama" value="{{ $u->infoUser->nama }}" disabled>
                     </div>
                     <div class="form-group">
+                        <?php
+                            $user = \App\User::find($u->infoUser->id_user);
+                        ?>
                         <label for="nama">Email</label>
-                        <input type="text" class="form-control"  value="{{ $u->infoUser->user->email }}" disabled>
+                        <input type="text" class="form-control"  value="{{ $user->email }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="telp">Nomor HP</label>

@@ -38,7 +38,10 @@
                     ?>
                     <a href="{{ route('C-DetailPelamar', ['id' => $id]) }}">{{ $u->nama }}</a>
                 </td>
-                <td>{{ $u->user->email }}</td>
+                <?php
+                    $user = \App\User::find($u->id_user);
+                ?>
+                <td>{{ $user->email }}</td>
                 <td>{{ umur($u->tgl_lahir) }} <span class="">tahun</span></td>
                 <td>{{ $j->posisi }}</td>
                 <td class="text-capitalize">
